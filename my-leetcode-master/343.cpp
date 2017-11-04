@@ -1,40 +1,14 @@
-#include<algorithm>
-#include<iostream>
-using namespace std;
-
-int mmax(int a, int b) {
-  if (a > b)
-    return a;
-  return b;
-}
-
 class Solution {
 public:
     int integerBreak(int n) {
-      int* arr = new int[n+1];
-      int tmp = 0, max = 1;
-      fill(arr, arr+n+1, 1);
-      arr[3]=2;
-
-      for (int i = 4; i <= n; i++) {
-        for (int j = 2; j <= i/2; j++) {
-          tmp = mmax(j*(i-j), arr[j]*arr[i-j]);
-          tmp = mmax(j*arr[i-j], tmp);
-          arr[i] = mmax(arr[i], tmp);
+        if(n < 4) return n-1;
+        int res = 1;
+        while(n > 2){//看n包含多少个3,把他们相乘,直到n<=2
+            res *= 3;
+            n -= 3;
         }
-      }
-
-      max = arr[n];
-      delete[] arr;
-      return max;
+        if(n == 0) return res;//n可以整除3，res就是各个3相乘
+        if(n == 1) return (res / 3 ) * 4;//除3余1，把其中的一个3加1变为4再相乘
+        if(n == 2) return res * 2;//除3余2,则可直接把2与res相乘
     }
 };
-
-
-int main() {
-  Solution s;
-  int n;
-  while (cin >> n) {
-    cout << s.integerBreak(n) << endl;
-  }
-}
