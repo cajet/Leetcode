@@ -7,21 +7,11 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
 class Solution {
 public:
-    inline bool isLeaf(TreeNode* root) {
-      return root->right==NULL&&root->left==NULL;
-    }
-
     bool hasPathSum(TreeNode* root, int sum) {
-      if (root==NULL)
-        return false;
-
-      int ans = root->val;
-      if (isLeaf(root))
-        return ans==sum;
-      
-      return hasPathSum(root->right, sum-ans) || hasPathSum(root->left, sum-ans);
+        if (root == NULL) return false;
+        if (root->val == sum && root->left ==  NULL && root->right == NULL) return true;
+        return hasPathSum(root->left, sum-root->val) || hasPathSum(root->right, sum-root->val);
     }
 };
